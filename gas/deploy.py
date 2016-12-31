@@ -87,7 +87,8 @@ class Command(BaseCommand):
         if int(resp['status']) == 200:
             print "Done."
         else:
-            print "Error (%s)." % resp['status']
+            error_response = json.loads(content)['error']
+            print "Error (%s).\n%s" % (resp['status'], error_response['message'])
 
     def get_existing_files(self, opts):
         (resp, content) = self.get_client(opts).request(
